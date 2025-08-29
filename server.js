@@ -1,28 +1,30 @@
 import generateCourse from "./libs/generateCourse.js";
 import * as dotenv from "dotenv";
 import express from "express";
+import morgan from "morgan";
+import courseRouter from './routes/courseRouter.js'
 // Load environment variables
 dotenv.config();
-const app = express()(
-  // Example usage
-  async () => {
-    const topic = "Python Programming";
-    const weeks = 12;
-    const difficulty = "Beginner";
+const app = express();
 
-    console.log(
-      `Generating a ${weeks}-week ${difficulty} course on "${topic}"...`
-    );
-    const course = await generateCourse(topic, weeks, difficulty);
+app.use(express.json())
+app.use(morgan('dev'))
 
-    if (course.error) {
-      console.error("Course generation failed:", course.error);
-    } else {
-      console.log("\nGenerated Course:");
-      console.log(JSON.stringify(course, null, 2));
-    }
-  }
-)();
+
+app.use('/api/v1',courseRouter)
+
+
+
+
+
+
+
+
+
+
+
+
+
 const port = process.env.PORT || 5000;
 const start = () => {
   try {
@@ -34,3 +36,4 @@ const start = () => {
   }
 };
 start();
+
