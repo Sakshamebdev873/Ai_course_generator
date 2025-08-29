@@ -5,6 +5,7 @@
     "@langchain/community": "^0.3.53",
     "@langchain/core": "^0.3.72",
     "@langchain/google-genai": "^0.2.16",
+    "@prisma/client": "^6.15.0",
     "chroma": "^0.0.1",
     "chromadb": "^3.0.14",
     "cors": "^2.8.5",
@@ -26,5 +27,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "prisma": "^6.15.0"
+  }
 }

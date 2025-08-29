@@ -2,7 +2,7 @@ import generateCourse from "../libs/generateCourse.js";
 
 
 
-const courseGeneration =async (req,res) => {
+const courseGeneration = async (req,res) => {
   try {
     const { topic, weeks, difficulty } = req.body;
     const result = await generateCourse(topic, weeks, difficulty);
