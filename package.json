@@ -6,6 +6,7 @@
     "@langchain/core": "^0.3.72",
     "@langchain/google-genai": "^0.2.16",
     "@prisma/client": "^6.15.0",
+    "argon2": "^0.44.0",
     "chroma": "^0.0.1",
     "chromadb": "^3.0.14",
     "cors": "^2.8.5",
