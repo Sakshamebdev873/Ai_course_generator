@@ -7,9 +7,13 @@
     "@langchain/google-genai": "^0.2.16",
     "chroma": "^0.0.1",
     "chromadb": "^3.0.14",
-    "dotenv": "^17.2.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
     "fs": "^0.0.1-security",
-    "langchain": "^0.3.31"
+    "langchain": "^0.3.31",
+    "morgan": "^1.10.1",
+    "nodemon": "^3.1.10"
   },
   "name": "research_llm_1",
   "version": "1.0.0",
