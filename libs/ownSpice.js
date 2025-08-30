@@ -19,7 +19,7 @@ async function hashPassword(password) {
     password + PEPPER,
     salt,
     100_000, // iterations
-    32,      // key length in bytes
+    32, // key length in bytes
     "sha256"
   );
 
@@ -59,3 +59,4 @@ async function main() {
   console.log("Password valid?", isValid);
 }
 main();
+export { verifyPassword, hashPassword };

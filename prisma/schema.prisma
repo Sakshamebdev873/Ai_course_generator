@@ -34,3 +34,10 @@ model Course {
   content    Json
   createdAt  DateTime @default(now())
 }
+model BlacklistedToken {
+  id        String   @id @default(uuid())
+  jti       String   @unique   // JWT ID
+  token     String   // (optional: store full token)
+  expiresAt DateTime // When token would naturally expire
+  createdAt DateTime @default(now())
+}
