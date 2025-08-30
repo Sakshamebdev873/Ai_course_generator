@@ -58,5 +58,4 @@ async function main() {
   const isValid = await verifyPassword("mySecret123!", salt, hash);
   console.log("Password valid?", isValid);
 }
-
 main();
