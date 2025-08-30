@@ -1,8 +1,12 @@
 import { PrismaClient } from "../generated/prisma/client.js";
 import jwt from "jsonwebtoken";
 import { hashPassword, verifyPassword } from "../libs/ownSpice.js";
-
+import redisClient from '../libs/redisClient.js'
 const prisma = new PrismaClient();
+function generateToken(userId) {
+  const jti = crypto.randomUUID();
+  return jwt.sign({ userId, jti }, process.env.JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+}
 const register = async (req, res) => {
   try {
     const { username, password, email } = req.body;
@@ -33,19 +37,27 @@ const login = async (req, res) => {
         .status(400)
         .json({ message: "Please check Your password...." });
     }
-    const token = jwt.sign(
-      { id: user.id, email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" }
-    );
-    res.status(200).json({ message: "Succesfully logged In....." });
+    const token = generateToken(user.id)
+    res.status(200).json({ message: "Succesfully logged In.....",token });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Login failed" });
   }
 };
 const logout = async (req, res) => {
-  // With JWT we can’t "invalidate" easily without blacklist.
-  // Easiest: let client delete token from storage (localStorage/cookie).
-  res.json({ message: "Logout successful (delete token on client)" });
+const token = req.headers.authorization?.spilt(" ")[1]
+if(!token) {
+  return res.status(400).json({error : "No token"})
+}
+try {
+ const decoded = jwt.verify(token,process.env.JWT_SECRET)
+ const exp = decoded.exp
+ const ttl = exp - Math.floor(Date.now() / 1000)
+ await redisClient.setEx(`blacklisted:${decoded.jti}`,ttl,"true")
+ res.json({message : "Logged out successfully"})
+} catch (error) {
+  console.error(error);
+  res.status(401).json({error : "Invalid token"})
+}
+
 };

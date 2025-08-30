@@ -10,13 +10,15 @@
     "chroma": "^0.0.1",
     "chromadb": "^3.0.14",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^16.6.1",
     "express": "^5.1.0",
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "langchain": "^0.3.31",
     "morgan": "^1.10.1",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "redis": "^5.8.2"
   },
   "name": "research_llm_1",
   "version": "1.0.0",
