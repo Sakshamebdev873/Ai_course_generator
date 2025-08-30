@@ -25,14 +25,26 @@ model User {
 }
 
 model Course {
-  id         Int      @id @default(autoincrement())
-  user       User     @relation(fields: [userId], references: [id])
-  userId     Int
-  topic      String
-  weeks      Int
-  difficulty String
-  content    Json
-  createdAt  DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  topic       String
+  difficulty  String
+  weeks       Int
+  description String?
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+  weeksData   Week[]
+  createdAt   DateTime @default(now())
+}
+
+model Week {
+  id          Int      @id @default(autoincrement())
+  weekNumber  Int
+  topic       String
+  description String
+  exercise    String
+  isCompleted Boolean  @default(false)
+  course      Course   @relation(fields: [courseId], references: [id])
+  courseId    Int
 }
 model BlacklistedToken {
   id        String   @id @default(uuid())

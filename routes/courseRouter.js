@@ -1,7 +1,12 @@
 import {Router} from 'express'
-import courseGeneration from '../controllers/courseControllers.js'
+import { createCourse, getCourses, getCourseById, deleteCourse, completeWeek } from "../controllers/courseControllers.js";
 
+const router = Router();
 
-const router = Router()
-router.post("/generate", courseGeneration);
-export default router
+router.post("/", createCourse);
+router.get("/", getCourses);
+router.get("/:id", getCourseById);
+router.delete("/:id", deleteCourse);
+router.patch("/week/:weekId/complete", completeWeek);
+
+export default router;
