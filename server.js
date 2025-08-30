@@ -1,29 +1,17 @@
-import generateCourse from "./libs/generateCourse.js";
 import * as dotenv from "dotenv";
 import express from "express";
 import morgan from "morgan";
-import courseRouter from './routes/courseRouter.js'
+import courseRouter from "./routes/courseRouter.js";
+import authRouter from "./routes/authRouter.js";
 // Load environment variables
 dotenv.config();
 const app = express();
 
-app.use(express.json())
-app.use(morgan('dev'))
+app.use(express.json());
+app.use(morgan("dev"));
 
-
-app.use('/api/v1',courseRouter)
-
-
-
-
-
-
-
-
-
-
-
-
+app.use("/api/v1", authRouter);
+app.use("/api/v1", courseRouter);
 
 const port = process.env.PORT || 5000;
 const start = () => {
@@ -36,4 +24,3 @@ const start = () => {
   }
 };
 start();
-

@@ -11,7 +11,7 @@ function generateSalt(length = 16) {
 }
 
 // Hash password: PBKDF2 -> Argon2id
-async function hashPassword(password) {
+export async function hashPassword(password) {
   const salt = generateSalt();
 
   // Stage 1: PBKDF2
@@ -30,12 +30,13 @@ async function hashPassword(password) {
     timeCost: 3,
     parallelism: 2,
   });
+// console.log(salt,argon2Hash);
 
   return { salt, hash: argon2Hash };
 }
 
 // Verify password
-async function verifyPassword(password, storedSalt, storedHash) {
+export async function verifyPassword(password, storedSalt, storedHash) {
   const pbkdf2Hash = crypto.pbkdf2Sync(
     password + PEPPER,
     storedSalt,
@@ -47,16 +48,3 @@ async function verifyPassword(password, storedSalt, storedHash) {
   return await argon2.verify(storedHash, pbkdf2Hash);
 }
 
-// Example usage
-async function main() {
-  const password = "mySecret123!";
-  const { salt, hash } = await hashPassword(password);
-
-  console.log("Salt:", salt);
-  console.log("Hash:", hash);
-
-  const isValid = await verifyPassword("mySecret123!", salt, hash);
-  console.log("Password valid?", isValid);
-}
-main();
-export { verifyPassword, hashPassword };

@@ -1,23 +1,31 @@
 import jwt from "jsonwebtoken";
-import { PrismaClient } from "../generated/prisma/client";
-import redisClient from '../libs/redisClient.js'
-const prisma = new PrismaClient();
-export async function authMiddleware(req, res, next) {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) return res.status(401).json({ error: "No token provided" });
+import redisClient from "../libs/redisClient.js";
 
+const authMiddleware = async (req, res, next) => {
+  // console.log(req.headers)
+  const token = req.headers.authorization?.split(" ")[1];
+  
+  if (!token) return res.status(401).json({ error: "No token provided" });
+  
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    // Check blacklist
-    const isBlacklisted = await redisClient.get(`blacklist:${decoded.jti}`);
-    if (isBlacklisted) {
-      return res.status(401).json({ error: "Token blacklisted. Please log in again." });
+    
+    // Check Redis connection
+    if (!redisClient.isOpen) {
+      await redisClient.connect();
     }
-
-    req.user = { id: decoded.userId };
+    
+    // Check if token is blacklisted
+    const blacklisted = await redisClient.get(`blacklist:${decoded.jti}`);
+    
+    if (blacklisted) {
+      return res.status(401).json({ error: "Token revoked" });
+    }
+    
+    req.user = decoded; // Optional: Attach decoded token to request
     next();
   } catch (err) {
-    return res.status(401).json({ error: "Invalid token" });
+    res.status(401).json({ error: "Invalid token" });
   }
-}
+};
+export default authMiddleware;
