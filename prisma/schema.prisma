@@ -32,7 +32,7 @@ model Course {
   description String?
   user        User     @relation(fields: [userId], references: [id])
   userId      Int
-  weeksData   Week[]
+  weeksData   Week[]  
   createdAt   DateTime @default(now())
 }
 
@@ -43,7 +43,7 @@ model Week {
   description String
   exercise    String
   isCompleted Boolean  @default(false)
-  course      Course   @relation(fields: [courseId], references: [id])
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId    Int
 }
 model BlacklistedToken {

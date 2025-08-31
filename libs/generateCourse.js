@@ -29,7 +29,7 @@ const retriever = vectorstore.asRetriever({
 const llm = new ChatGoogleGenerativeAI({
   model: "gemini-2.5-flash", // Using gemini-pro instead of 2.0-flash for better availability
   temperature: 0.7,
-  apiKey: process.env.GOOGLE_API_KEY, // Use environment variable for security
+  apiKey: "AIzaSyA-zbjiXmjz9TIo3bQTtS5tL4UsbjxQsII", // Use environment variable for security
 });
 
 // Prompt Template
