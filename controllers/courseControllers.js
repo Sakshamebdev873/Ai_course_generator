@@ -117,6 +117,7 @@ export const completedWeek = async (req, res) => {
 
 
 export const courseProgress = async (req, res) => {
+
   try {
     // Make sure req.user.id exists (authMiddleware should run before this)
     const userId = req.user?.id;
@@ -147,6 +148,8 @@ console.log(userId);
     });
 
     res.status(200).json({ courses: coursesWithProgress });
+
+return;
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to fetch course progress" });

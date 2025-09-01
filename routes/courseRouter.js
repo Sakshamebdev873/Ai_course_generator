@@ -4,9 +4,9 @@ import { createCourse, getCourse, getCourseById, deleteCourse, completedWeek, co
 const router = Router();
 
 router.post("/", createCourse);
+router.get('/progress',courseProgress)
 router.get("/", getCourse);
 router.get("/:id", getCourseById);
 router.delete("/:id", deleteCourse);
 router.patch("/week/:weekId/complete", completedWeek);
-router.get('/progress',courseProgress)
 export default router;

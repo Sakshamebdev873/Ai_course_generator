@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use("/api/v1", authRouter);
-app.use("/api/v1", authMiddleware,courseRouter);
+app.use("/api/v1",authMiddleware,courseRouter);
 
 const port = process.env.PORT || 5000;
 const start = () => {
